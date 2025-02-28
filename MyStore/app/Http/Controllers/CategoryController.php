@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function getCategory($parentId = 0)
     {
         $data = $this->category->all();
-        $recusive = new \App\Components\Recusive($data);
+        $recusive = new \App\Components\Recusive($data); // Sử dụng Recusive (theo hình ảnh bạn gửi)
         $htmlOption = $recusive->categoryRecusive($parentId);
         return $htmlOption;
     }
@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function create()
     {
         $data = $this->category->all();
-        $htmlOption = $this->getCategory($parentId = '');
+        $htmlOption = $this->getCategory(); // Mặc định $parentId = 0
         return view('category.add', compact('data', 'htmlOption'));
     }
 
@@ -54,7 +54,6 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with('success', 'Danh mục đã được xóa!');
     }
 
-    // Changed to not require $id parameter
     public function index()
     {
         $categories = $this->category->latest()->paginate();
